@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adam's Photo Journal</title>
+    <link rel="stylesheet" href="{% static 'journal/homepage.css' %}">
+  </head>
+  <body>
+    {% for date, images in days.items %}
+    <div class="entry">
+        <h2>{{date}}</h2>
+        <div class="image-row">
+            {% for img in images %}
+            <img src="{{ img.image.url }}" alt="">
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,20 @@
+body {
+    display: block;
+    margin: 0;
+}
+
+.entry {
+    margin: auto;
+    text-align: center;
+}
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image-row img {
+    width: 200px;
+    height: auto;
+}

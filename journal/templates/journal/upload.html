@@ -1,0 +1,16 @@
+HELLO MOLD
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adam's Photo Journal</title>
+</head>
+<body>
+    <h2>New Entry</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
