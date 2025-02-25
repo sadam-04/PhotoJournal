@@ -1,0 +1,14 @@
+body {
+    background-color: #e5ffe5;
+}
+
+.content {
+    display: block;
+    width: 40%;
+    margin: auto;
+    padding: 10px 100px;
+    border-radius: 2vh;
+    background-color: #f8f8f0;
+    text-align: center;
+    box-shadow: 3px 3px 3px #bbb;
+}

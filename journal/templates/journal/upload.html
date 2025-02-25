@@ -1,16 +1,19 @@
-HELLO MOLD
+{% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Adam's Photo Journal</title>
+    <link rel="stylesheet" href="{% static 'journal/upload.css' %}">
 </head>
 <body>
-    <h2>New Entry</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="content">
+        <h2>New Entry</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>
