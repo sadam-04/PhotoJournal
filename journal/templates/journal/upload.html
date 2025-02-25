@@ -8,12 +8,14 @@
 </head>
 <body>
     <div class="content">
-        <h2>New Entry</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+        <div class="inner-content">
+            <h2 class="header">New Entry</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

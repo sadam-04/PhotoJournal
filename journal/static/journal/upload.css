@@ -6,9 +6,21 @@ body {
     display: block;
     width: 40%;
     margin: auto;
+    margin-top: 5%;
     padding: 10px 100px;
     border-radius: 2vh;
     background-color: #f8f8f0;
     text-align: center;
+    border: 1px solid #999;
     box-shadow: 3px 3px 3px #bbb;
+}
+
+.inner-content {
+    width: 50%;
+    margin: auto;
+    text-align: left;
+}
+
+.inner-content .header {
+    text-align: center;
 }

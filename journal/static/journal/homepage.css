@@ -1,5 +1,5 @@
 :root {
-    --main-bg: #ffffff;
+    --main-bg: #e5ffe5;;
     --entry-bg: #ffffff;   /*#22AAA1;*/
     --entry-shadow: #888;
 
@@ -66,6 +66,7 @@ body {
 .content {
     width: 50%;
     margin: auto;
+    background-color: #f8f8f0;
     border-radius: 5px;
 }
 
