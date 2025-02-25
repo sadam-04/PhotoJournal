@@ -9,9 +9,10 @@ from .models import JournalEntry
 # Create your views here.
 
 def homepage(request):
-    images = JournalEntry.objects.all().order_by('date')
+    images = JournalEntry.objects.all().order_by('date').reverse()
     groups = {date: list(group) for date, group in groupby(images, key=attrgetter('date'))}
 
+    print("Groups:" + str(groups))
     return render(request, "journal/homepage.html", {'days': groups})
 
 def upload(request):

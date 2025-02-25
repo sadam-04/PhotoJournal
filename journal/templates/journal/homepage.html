@@ -4,19 +4,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adam's Photo Journal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{% static 'journal/homepage.css' %}">
   </head>
   <body>
-    {% for date, images in days.items %}
-    <div class="entry">
-        <h2>{{date}}</h2>
-        <div class="image-row">
-            {% for img in images %}
-            <img src="{{ img.image.url }}" alt="">
-            {% endfor %}
+    <div class="content">
+        <div class="primary-entry">
+            
         </div>
+        {% for date, images in days.items %}
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-header-left open-sans-500">{{date|date:"l"}}</span>
+                <span class="entry-header-right lowercase open-sans-500">{{date|date:"b jS"}}</span>
+            </div>
+            <hr style="margin: 0 0 5px 0;">
+            <div class="image-row">
+                {% for img in images %}
+                <img src="{{ img.image.url }}" alt="">
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
   </body>
 </html>

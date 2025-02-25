@@ -1,20 +1,135 @@
+:root {
+    --main-bg: #ffffff;
+    --entry-bg: #ffffff;   /*#22AAA1;*/
+    --entry-shadow: #888;
+
+    --onyx: #393d3f;
+
+}
+
+.open-sans-300 {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+.open-sans-400 {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+.open-sans-500 {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+.open-sans-600 {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+/* .entry-header {
+    color: var(--main-bg);
+} */
+
+.entry-header-left {
+    font-size: 32px;
+}
+
+.entry-header-right {
+    font-size: 20px;
+    align-self: flex-end;
+}
+
 body {
     display: block;
-    margin: 0;
+    margin: auto;
+    background-color: var(--main-bg);
+    color: var(--onyx);
+}
+
+.content {
+    width: 50%;
+    margin: auto;
+    border-radius: 5px;
 }
 
 .entry {
-    margin: auto;
-    text-align: center;
+    margin: 10px auto 10px auto;
+    padding: 5%;
+    background-color: var(--entry-bg);
+    border-radius: 10px;
+    border: 1px solid #999;
+    /* text-align: center; */
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.lowercase {
+    text-transform: lowercase;
 }
 
 .image-row {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
+    margin: auto;
+    /* justify-content: center; */
 }
 
 .image-row img {
-    width: 200px;
-    height: auto;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-height: 250px;
+
+    transition: all 150ms ease-in-out;
+
+    /* box-shadow: none; */
 }
+
+
+.image-row img:hover {
+    transform: scale(1.1);
+    /* box-shadow: 2px 2px 4px #000; */
+}
+
+/* .image-row .img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+}
+
+.image-row .img-wrap img {
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-row .img-wrap img:hover {
+    transform: scale(1.1);
+} */
