@@ -66,13 +66,13 @@ body {
 .content {
     width: 50%;
     margin: auto;
-    background-color: #f8f8f0;
+    background-color: var(--main-bg);
     border-radius: 5px;
 }
 
 .entry {
     margin: 10px auto 10px auto;
-    padding: 5%;
+    padding: 2% 5%;
     background-color: var(--entry-bg);
     border-radius: 10px;
     border: 1px solid #999;
@@ -94,6 +94,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     margin: auto;
+    padding: 2%;
     /* justify-content: center; */
 }
 

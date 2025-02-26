@@ -11,13 +11,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="{% static 'journal/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'journal/archive.css' %}">
   </head>
   <body>
+
     <div class="content">
-        <div class="primary-entry">
-            
+        {% if form %}
+        <div class="submission">
+            <h2 class="header">New Entry</h2>
+            <hr>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
         </div>
+        {% endif %}
+
         {% for date, images in days.items %}
         <div class="entry">
             <div class="entry-header">

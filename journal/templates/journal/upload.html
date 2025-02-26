@@ -10,6 +10,7 @@
     <div class="content">
         <div class="inner-content">
             <h2 class="header">New Entry</h2>
+            <hr>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
