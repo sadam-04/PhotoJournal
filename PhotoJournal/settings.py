@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ph999vy9+-ezj9yq9nzm6^ub^jmmb&@u)led&)vl^rqdkwtc##
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["adamsai.ch"]
+ALLOWED_HOSTS = ["adamsai.ch", "localhost"]
 
 
 # Application definition
@@ -129,4 +129,4 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_URL = 'journal/login'
+LOGIN_URL = 'login'
