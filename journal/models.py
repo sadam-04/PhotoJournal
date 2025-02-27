@@ -36,15 +36,15 @@ class JournalEntry(models.Model):
         
 
         # Convert image to RGB (removes alpha channel to avoid issues with JPEG)
-        # if img.mode in ("RGBA", "P"):
-        #     img = img.convert("RGB")
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
 
         # Resize or compress the image
         if img.size > max_size:
             img.thumbnail(max_size, Image.LANCZOS)
 
         output_io = BytesIO()
-        img.save(output_io, format="PNG", icc_profile=icc_profile, quality=85, exif=exif)
+        img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=85, exif=exif)
 
         # Save the compressed image back to the model
         self.image = ContentFile(output_io.getvalue(), self.image.name)
