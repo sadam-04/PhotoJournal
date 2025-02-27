@@ -3,7 +3,7 @@
 {% block content %}
 <div class="entry">
     
-    <form action="/login" method="post">
+    <form action="/journal/login" method="post">
         {% csrf_token %}
         <label for="un">username</label>
         <input type="text" name="username" id="un">
