@@ -1,13 +1,16 @@
 from datetime import timedelta
 from itertools import groupby
 from operator import attrgetter
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.db import models
 from django.db.models import Q
 from django.db.models.functions import TruncDate
+from django.contrib.auth.models import User
+
+from PhotoJournal import settings
 from .forms import JournalEntryForm 
 from .models import JournalEntry
+
+from django.contrib import auth
 
 # Create your views here.
 
@@ -38,19 +41,35 @@ def homepage(request):
     return render(request, "journal/archive.html", {'days': groups})
 
 def archive(request):
-    if request.method == "POST":
-        form = JournalEntryForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('archive')
+    # only superusers may access the archive page
+    if not request.user.is_superuser:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     else:
-        form = JournalEntryForm()
-    # return render(request, "journal/upload.html", {'form': form})
+        if request.method == "POST":
+            form = JournalEntryForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('archive')
+        else:
+            form = JournalEntryForm()
+        # return render(request, "journal/upload.html", {'form': form})
 
-    images = JournalEntry.objects.annotate(tsDate = TruncDate('timestamp')).order_by('tsDate').reverse()
-    groups = {timestamp: list(group) for timestamp, group in groupby(images, key=attrgetter('tsDate'))} # create a dictionary of days ("date": list of images)
+        images = JournalEntry.objects.annotate(tsDate = TruncDate('timestamp')).order_by('tsDate').reverse()
+        groups = {timestamp: list(group) for timestamp, group in groupby(images, key=attrgetter('tsDate'))} # create a dictionary of days ("date": list of images)
 
-    # print("Groups:" + str(groups))
-    return render(request, "journal/archive.html", {'days': groups, 'form': form})
+        # print("Groups:" + str(groups))
+        return render(request, "journal/archive.html", {'days': groups, 'form': form})
+
+def login(request):
+    if request.method == "POST":
+        user = auth.authenticate(request, username=request.POST["username"], password=request.POST["password"])
+        if user:
+            auth.login(request, user)
+            return redirect("homepage")
+    return render(request, 'journal/login.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('homepage')
 
 # def upload(request):

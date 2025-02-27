@@ -1,0 +1,15 @@
+{% extends 'journal/base.html' %}
+
+{% block content %}
+<div class="entry">
+    
+    <form action="/login" method="post">
+        {% csrf_token %}
+        <label for="un">username</label>
+        <input type="text" name="username" id="un">
+        <label for="pw">password</label>
+        <input type="password" name="password" id="pw">
+        <input type="submit">
+    </form>
+</div>
+{% endblock %}
