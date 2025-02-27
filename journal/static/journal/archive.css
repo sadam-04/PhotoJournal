@@ -115,6 +115,12 @@ body {
     /* box-shadow: 2px 2px 4px #000; */
 }
 
+@media (max-width: 993px) {
+    .content {
+        width: 90%;
+    }
+}
+
 /* .image-row .img-wrap {
     display: flex;
     align-items: center;
