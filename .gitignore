@@ -5,3 +5,4 @@ media
 uploads
 staticfiles
 mediafiles
+PhotoJournal/settings.py
