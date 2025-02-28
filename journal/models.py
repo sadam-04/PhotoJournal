@@ -1,4 +1,5 @@
 from datetime import datetime
+import uuid
 from django.db import models
 from django.utils import timezone
 from PIL import Image, ExifTags
@@ -7,12 +8,13 @@ from django.core.files.base import ContentFile
 
 # Create your models here.
 class JournalEntry(models.Model):
-    image = models.ImageField(upload_to='uploads/', null=True, blank=True)
+    image = models.ImageField(upload_to='', null=True, blank=True)
     timestamp = models.DateTimeField()
+    visible = models.BooleanField(default=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     def save(self, *args, **kwargs):
         max_size = (1600, 1600)
-
 
         # Open the image
         img = Image.open(self.image)

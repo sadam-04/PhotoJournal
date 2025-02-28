@@ -24,7 +24,22 @@
         <hr style="margin: 0 0 5px 0;">
         <div class="image-row">
             {% for img in images %}
-            <img src="{{ img.image.url }}" alt="">
+                <img src="{{ img.image.url }}" alt="">
+                {% if user.is_superuser %}
+                    {% if img.visible %}
+                    <form action="/archive/hide" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="target_id" value="{{img.id}}">
+                        <input type="submit" value="hide">
+                    </form>
+                    {% else %}
+                    <form action="/archive/show" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="target_id" value="{{img.id}}">
+                        <input type="submit" value="show">
+                    </form>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </div>
     </div>
