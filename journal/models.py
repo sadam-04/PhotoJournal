@@ -46,7 +46,7 @@ class JournalEntry(models.Model):
             img.thumbnail(max_size, Image.LANCZOS)
 
         output_io = BytesIO()
-        img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=85, exif=exif)
+        img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55, exif=exif)
 
         # Save the compressed image back to the model
         self.image = ContentFile(output_io.getvalue(), self.image.name)
