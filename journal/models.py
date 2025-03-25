@@ -20,10 +20,10 @@ class JournalEntry(models.Model):
         img = Image.open(self.image)
 
         icc_profile = img.info.get("icc_profile")  
-        exif = img.info.get("exif")
+        exif = img._getexif()
         
-        if (img._getexif()):
-            exiftags = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS }
+        if (exif is not None):
+            exiftags = { ExifTags.TAGS[k]: v for k, v in exif.items() if k in ExifTags.TAGS }
             exifDateTime = exiftags.get("DateTime")
             if (exifDateTime):
                 meta_timestamp = datetime.strptime(exifDateTime, "%Y:%m:%d %H:%M:%S")
@@ -46,7 +46,10 @@ class JournalEntry(models.Model):
             img.thumbnail(max_size, Image.LANCZOS)
 
         output_io = BytesIO()
-        img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55, exif=exif)
+        if (exif is not None):
+            img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55, exif=exif)
+        else:
+            img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55)
 
         # Save the compressed image back to the model
         self.image = ContentFile(output_io.getvalue(), self.image.name)
