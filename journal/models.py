@@ -20,10 +20,11 @@ class JournalEntry(models.Model):
         img = Image.open(self.image)
 
         icc_profile = img.info.get("icc_profile")  
-        exif = img._getexif()
+        exif = img.getexif()
         
         if (exif is not None):
-            exiftags = { ExifTags.TAGS[k]: v for k, v in exif.items() if k in ExifTags.TAGS }
+            exif_dict = dict(exif)
+            exiftags = { ExifTags.TAGS[k]: v for k, v in exif_dict.items() if k in ExifTags.TAGS }
             exifDateTime = exiftags.get("DateTime")
             if (exifDateTime):
                 meta_timestamp = datetime.strptime(exifDateTime, "%Y:%m:%d %H:%M:%S")
@@ -45,9 +46,11 @@ class JournalEntry(models.Model):
         if img.size > max_size:
             img.thumbnail(max_size, Image.LANCZOS)
 
+        exif_bytes = exif.tobytes() if exif is not None else None
+
         output_io = BytesIO()
-        if (exif is not None):
-            img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55, exif=exif)
+        if (exif_bytes is not None):
+            img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55, exif=exif_bytes)
         else:
             img.save(output_io, format="JPEG", icc_profile=icc_profile, quality=55)
 
