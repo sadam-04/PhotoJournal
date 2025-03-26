@@ -24,7 +24,7 @@
         <hr style="margin: 0 0 5px 0;">
         <div class="image-row">
             {% for img in images %}
-                <img src="{{ img.image.url }}" alt="">
+                <img src="{{ img.image.url }}" class="expandable-img" alt="">
                 {% if user.is_superuser %}
                     {% if img.visible %}
                     <form action="/archive/hide" method="POST">
@@ -44,4 +44,28 @@
         </div>
     </div>
     {% endfor %}
+
+    <div id="overlay" class="hidden">
+        <img id="expanded-img" src="">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const images = document.querySelectorAll(".expandable-img");
+            const overlay = document.getElementById("overlay");
+            const expandedImg = document.getElementById("expanded-img");
+
+            images.forEach(img => {
+                img.addEventListener("click", () => {
+                    expandedImg.src = img.src;
+                    overlay.classList.remove("hidden");
+                });
+            });
+
+            overlay.addEventListener("click", () => {
+                overlay.classList.add("hidden");
+            });
+        });
+    </script>
+
 {% endblock %}
