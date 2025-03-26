@@ -144,6 +144,11 @@ body {
     .content {
         width: 90%;
     }
+
+    .image-row img:hover {
+        transform: none;
+        /* box-shadow: 2px 2px 4px #000; */
+    }
 }
 
 /* .image-row .img-wrap {
