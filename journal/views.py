@@ -41,7 +41,7 @@ def homepage(request):
     else:
         groups = None
 
-    return render(request, "journal/archive.html", {'days': groups})
+    return render(request, "journal/archive2.html", {'days': groups})
 
 def archive(request):
     # only superusers may access the archive page
@@ -61,7 +61,7 @@ def archive(request):
         groups = {timestamp: list(group) for timestamp, group in groupby(images, key=attrgetter('tsDate'))} # create a dictionary of days ("date": list of images)
 
         # print("Groups:" + str(groups))
-        return render(request, "journal/archive.html", {'days': groups, 'form': form})
+        return render(request, "journal/archive2.html", {'days': groups, 'form': form})
 
 def hide(request):
     if request.user.is_superuser and request.method == 'POST':
