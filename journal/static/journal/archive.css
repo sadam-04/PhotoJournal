@@ -64,18 +64,26 @@ body {
     margin: auto;
     background-color: var(--main-bg);
     color: var(--text);
+    
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;    
 }
 
 .content {
-    width: 50%;
+    width: 420px;
     margin: auto;
     background-color: var(--main-bg);
     border-radius: 5px;
 }
 
 .entry {
+    position: relative;
     margin: 10px auto 10px auto;
-    padding: 2% 5%;
+    /* padding: 2% 5%; */
     background-color: var(--entry-bg);
     border-radius: 10px;
     overflow: hidden;
@@ -86,7 +94,8 @@ body {
 .entry-header {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    padding: 0px 15px 0px 15px;
+    /* width: 100%; */
 }
 
 .lowercase {
@@ -97,6 +106,19 @@ body {
     background-color: var(--onyx);
     border: none;
     border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    color: white;
+    z-index: 1000;
+}
+
+.nav.next {
+    /* transform: translateY(-100%); */
+    right: 0;
+}
+
+.nav.prev {
+    left: 0;
 }
 
 .image-row {
@@ -104,31 +126,29 @@ body {
     /* grid-template-columns: 1fr 1fr 1fr; */
     /* gap: 10px; */
     /* margin: auto; */
+    /* width: 420px; */
     /* padding: 2%; */
-    transition: transform 0.5s ease;
+    transition: transform 0.4s ease;
     /* justify-content: center; */
 }
 
 .image-row img {
     object-fit: cover;
-    /* width: 200px; */
-    width: 100%;
+    width: 420px;
+    /* width: 100%; */
     /* height: 150px; */
     flex-shrink: 0;
-    margin-right: 20px;
-    margin-left: 10px;
+    /* margin-right: 10px; */
+    /* margin-left: 10px; */
     /* max-height: 250px; */
 
-    transition: all 150ms ease-in-out;
+    /* transition: all 150ms ease-in-out; */
 
     /* box-shadow: none; */
 }
 
 
-.image-row img:hover {
-    transform: scale(1.1);
-    /* box-shadow: 2px 2px 4px #000; */
-}
+
 
 .hidden {
     display: none !important;
@@ -155,16 +175,15 @@ body {
 
 
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
     .content {
         width: 90%;
     }
 
     .image-row img:hover {
         transform: none;
-        /* box-shadow: 2px 2px 4px #000; */
     }
-}
+} */
 
 /* .image-row .img-wrap {
     display: flex;

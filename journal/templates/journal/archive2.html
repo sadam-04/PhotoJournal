@@ -22,13 +22,15 @@
             <span class="entry-header-right lowercase open-sans-500">{{date|date:"b jS"}}</span>
         </div>
         <hr style="margin: 0 0 5px 0;">
-        <button class="nav prev">&lt;</button>
+        {% if images|length > 1 %}
+            <button class="nav prev">&lt;</button>
+            <button class="nav next">&gt;</button>
+        {% endif %}
         <div class="image-row">
             {% for img in images %}
-                <img src="{{ img.image.url }}" class="expandable-img" alt="">
+                <img src="{{ img.image.url }}" class="expandable-img" alt="" loading="lazy">
             {% endfor %}
         </div>
-        <button class="nav next">&gt;</button>
     </div>
     {% endfor %}
 
@@ -43,22 +45,54 @@
             const nextBtn = entry.querySelector('.next');
 
             let position = 0;
-            const imgWidth = 220; //imgage-width + margin-right
+            const imgWidth = 420; //imgage-width + horiz. margin
 
-            prevBtn.addEventListener('click', () => {
+            entry.addEventListener('click', function (e) {
+                const rect = entry.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+
+                if (clickX < rect.width / 2) {
+                    slidePrev();
+                }
+
+                if (clickX >= rect.width / 2) {
+                    slideNext();
+                }
+            });
+
+            function slidePrev() {
                 position += imgWidth;
-                // if (position > 0) {
-                //     position = 0;
-                // }
+                if (position > 0) {
+                    position = 0;
+                }
                 imgRow.style.transform = `translateX(${position}px)`;
-            });
+            }
 
-            nextBtn.addEventListener('click', () => {
-                // const maxShift = -(imgRow.scrollWidth - document.querySelector('.entry').offsetWidth);   
+            function slideNext() {
+                const maxShift = -(imgRow.scrollWidth - imgRow.offsetWidth);   
                 position -= imgWidth;
-                // position = Math.max(position, maxShift);
+                if (position < maxShift) {
+                    position = maxShift;
+                }
                 imgRow.style.transform = `translateX(${position}px)`;
-            });
+            }
+
+            // prevBtn.addEventListener('click', () => {
+            //     position += imgWidth;
+            //     if (position > 0) {
+            //         position = 0;
+            //     }
+            //     imgRow.style.transform = `translateX(${position}px)`;
+            // });
+
+            // nextBtn.addEventListener('click', () => {
+            //     const maxShift = -(imgRow.scrollWidth - imgRow.offsetWidth);   
+            //     position -= imgWidth;
+            //     if (position < maxShift) {
+            //         position = maxShift;
+            //     }
+            //     imgRow.style.transform = `translateX(${position}px)`;
+            // });
 
         })
     </script>
