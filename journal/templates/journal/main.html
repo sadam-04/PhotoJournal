@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if form %}
-    <div class="submission">
+    <div class="submission open-sans-400">
         <h2 class="header">New Entry</h2>
         <hr>
         <form method="post" enctype="multipart/form-data">
@@ -28,7 +28,24 @@
         {% endif %}
         <div class="image-row">
             {% for img in images %}
-                <img src="{{ img.image.url }}" class="expandable-img" alt="" loading="lazy">
+                {% if img.visible or form and user.is_superuser %}
+                    <img src="{{ img.image.url }}" class="expandable-img" alt="" loading="lazy">
+                {% endif %}
+                {% if form and user.is_superuser %}
+                    {% if img.visible %}
+                        <form action="/manage/hide" class="vis-toggle-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="target_id" value="{{img.id}}">
+                            <input type="submit" value="hide" class="vis-toggle">
+                        </form>
+                    {% else %}
+                        <form action="/manage/show" class="vis-toggle-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="target_id" value="{{img.id}}">
+                            <input type="submit" value="show" class="vis-toggle">
+                        </form>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -43,22 +60,27 @@
             const imgRow = entry.querySelector('.image-row');
             const prevBtn = entry.querySelector('.prev');
             const nextBtn = entry.querySelector('.next');
+            const visToggleBtn = entry.querySelector('.vis-toggle');
 
             let position = 0;
 
-            const imgWidth = 420; //imgage-width + horiz. margin
-            // const imgWidth = imgRow.offsetWidth;
+            let imgWidth = imgRow.offsetWidth;
+            window.addEventListener('resize', function(event) {
+                imgWidth = imgRow.offsetWidth;
+            }, true);
+
+            // const imgWidth = 420; //imgage-width + horiz. margin
             // imagerow width + margin
 
             entry.addEventListener('click', function (e) {
                 const rect = entry.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
 
-                if (clickX < rect.width / 2) {
+                if (clickX < rect.width / 3) {
                     slidePrev();
                 }
 
-                if (clickX >= rect.width / 2) {
+                if (clickX > 2 * rect.width / 3) {
                     slideNext();
                 }
             });
@@ -72,7 +94,11 @@
             }
 
             function slideNext() {
-                const maxShift = -(imgRow.scrollWidth - imgRow.offsetWidth);   
+                let visToggleBtnWidth = 0;
+                if (visToggleBtn) {
+                    visToggleBtnWidth = visToggleBtn.offsetWidth;
+                }
+                const maxShift = -(imgRow.scrollWidth - imgRow.offsetWidth - visToggleBtnWidth);   
                 position -= imgWidth;
                 if (position < maxShift) {
                     position = maxShift;
