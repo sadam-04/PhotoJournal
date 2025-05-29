@@ -41,9 +41,9 @@ def homepage(request):
     else:
         groups = None
 
-    return render(request, "journal/archive2.html", {'days': groups})
+    return render(request, "journal/main.html", {'days': groups})
 
-def archive(request):
+def manage(request):
     # only superusers may access the archive page
     if not request.user.is_superuser:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
@@ -52,7 +52,7 @@ def archive(request):
             form = JournalEntryForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
-                return redirect('archive')
+                return redirect('manage')
         else:
             form = JournalEntryForm()
         # return render(request, "journal/upload.html", {'form': form})
@@ -61,7 +61,7 @@ def archive(request):
         groups = {timestamp: list(group) for timestamp, group in groupby(images, key=attrgetter('tsDate'))} # create a dictionary of days ("date": list of images)
 
         # print("Groups:" + str(groups))
-        return render(request, "journal/archive2.html", {'days': groups, 'form': form})
+        return render(request, "journal/main.html", {'days': groups, 'form': form})
 
 def hide(request):
     if request.user.is_superuser and request.method == 'POST':
@@ -71,7 +71,7 @@ def hide(request):
             target.visible = False
             # print("Visibility: " + str(target.visible))
             target.save(update_fields=['visible'])
-    return redirect('archive')
+    return redirect('manage')
 
 def show(request):
     if request.user.is_superuser and request.method == 'POST':
@@ -80,7 +80,7 @@ def show(request):
         if target is not None:
             target.visible = True
             target.save(update_fields=['visible'])
-    return redirect('archive')
+    return redirect('manage')
 
 
 def login(request):
