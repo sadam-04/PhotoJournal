@@ -33,13 +33,13 @@
                 {% endif %}
                 {% if form and user.is_superuser %}
                     {% if img.visible %}
-                        <form action="/manage/hide" class="vis-toggle-form" method="POST">
+                        <form action="/journal/manage/hide" class="vis-toggle-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="target_id" value="{{img.id}}">
                             <input type="submit" value="hide" class="vis-toggle">
                         </form>
                     {% else %}
-                        <form action="/manage/show" class="vis-toggle-form" method="POST">
+                        <form action="/journal/manage/show" class="vis-toggle-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="target_id" value="{{img.id}}">
                             <input type="submit" value="show" class="vis-toggle">

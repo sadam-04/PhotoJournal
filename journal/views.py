@@ -44,7 +44,7 @@ def homepage(request):
     return render(request, "journal/main.html", {'days': groups})
 
 def manage(request):
-    # only superusers may access the archive page
+    # superusers only
     if not request.user.is_superuser:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     else:
