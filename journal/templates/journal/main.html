@@ -33,17 +33,19 @@
                 {% endif %}
                 {% if form and user.is_superuser %}
                     {% if img.visible %}
-                        <form action="/journal/manage/hide" class="vis-toggle-form" method="POST">
+                        {% comment %} <form action="/journal/manage/hide" class="vis-toggle-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="target_id" value="{{img.id}}">
                             <input type="submit" value="hide" class="vis-toggle">
-                        </form>
+                        </form> {% endcomment %}
+                        <button class="hideBttn" action={hide({{img.id}})}>Hide</button>
                     {% else %}
-                        <form action="/journal/manage/show" class="vis-toggle-form" method="POST">
+                        {% comment %} <form action="/journal/manage/show" class="vis-toggle-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="target_id" value="{{img.id}}">
                             <input type="submit" value="show" class="vis-toggle">
-                        </form>
+                        </form> {% endcomment %}
+                        <button class="showBttn" action={show({{img.id}})}>Show</button>
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -56,6 +58,19 @@
     </div> {% endcomment %}
 
     <script>
+
+        async function hide(id) {
+            await fetch("/manage/hide/" + id.toString(), {
+                method: "UPDATE"
+            });
+        }
+
+        async function show(id) {
+            await fetch("/manage/show/" + id.toString(), {
+                method: "UPDATE"
+            });
+        }
+
         document.querySelectorAll('.entry').forEach(entry => {
             const imgRow = entry.querySelector('.image-row');
             const prevBtn = entry.querySelector('.prev');

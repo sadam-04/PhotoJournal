@@ -7,8 +7,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("journal", views.homepage, name="homepage"),
     path("journal/manage", views.manage, name="manage"),
-    path("journal/manage/hide", views.hide, name="hide"),
-    path("journal/manage/show", views.show, name="show"),
+    path("journal/manage/hide/<str:uid>", views.hide, name="hide"),
+    path("journal/manage/show/<str:uid>", views.show, name="show"),
     path("journal/login", views.login, name='login'),
     path("journal/logout", views.logout, name='logout'),
     # path("upload/", views.upload, name="upload"),

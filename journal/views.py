@@ -63,9 +63,10 @@ def manage(request):
         # print("Groups:" + str(groups))
         return render(request, "journal/main.html", {'days': groups, 'form': form})
 
-def hide(request):
-    if request.user.is_superuser and request.method == 'POST':
-        id = request.POST["target_id"]
+def hide(request, item):
+    if request.user.is_superuser and request.method == 'UPDATE':
+        # id = request.POST["target_id"]
+        id = item
         target = JournalEntry.objects.filter(id=id).first()
         if target is not None:
             target.visible = False
@@ -73,9 +74,10 @@ def hide(request):
             target.save(update_fields=['visible'])
     return redirect('manage')
 
-def show(request):
-    if request.user.is_superuser and request.method == 'POST':
-        id = request.POST["target_id"]
+def show(request, item):
+    if request.user.is_superuser and request.method == 'UPDATE':
+        # id = request.POST["target_id"]
+        id = item;
         target = JournalEntry.objects.filter(id=id).first()
         if target is not None:
             target.visible = True
