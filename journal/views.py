@@ -41,7 +41,7 @@ def homepage(request):
     else:
         groups = None
 
-    return render(request, "journal/archive.html", {'days': groups})
+    return render(request, "journal/archive.html", {'days': groups, 'show_controls': False})
 
 def archive(request):
     # only superusers may access the archive page
@@ -61,11 +61,13 @@ def archive(request):
         groups = {timestamp: list(group) for timestamp, group in groupby(images, key=attrgetter('tsDate'))} # create a dictionary of days ("date": list of images)
 
         # print("Groups:" + str(groups))
-        return render(request, "journal/archive.html", {'days': groups, 'form': form})
+        return render(request, "journal/archive.html", {'days': groups, 'form': form, 'show_controls': True})
 
-def hide(request):
-    if request.user.is_superuser and request.method == 'POST':
-        id = request.POST["target_id"]
+def hide(request, item):
+    if request.user.is_superuser and request.method == 'PATCH':
+        
+        # id = request.PATCH["target_id"]
+        id = item
         target = JournalEntry.objects.filter(id=id).first()
         if target is not None:
             target.visible = False
@@ -73,9 +75,11 @@ def hide(request):
             target.save(update_fields=['visible'])
     return redirect('archive')
 
-def show(request):
-    if request.user.is_superuser and request.method == 'POST':
-        id = request.POST["target_id"]
+def show(request, item):
+    if request.user.is_superuser and request.method == 'PATCH':
+        
+        # id = request.PATCH["target_id"]
+        id = item
         target = JournalEntry.objects.filter(id=id).first()
         if target is not None:
             target.visible = True
